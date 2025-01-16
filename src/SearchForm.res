@@ -1,3 +1,6 @@
+open Promise
+open Webapi
+open APIType
 
 @react.component
 let make = () => {
@@ -16,23 +19,25 @@ let make = () => {
  */ 
 
   let fetch = () => {
-    // Fetch.fetch("https://hn.algolia.com/api/v1/search?react")->then(res =>
-    //   switch res->Fetch.Response.ok {
-    //   | true => res->Fetch.Response.json->then(res => res->constructBacon->resolve) 
-    //   | false =>
-    //     Error(
-    //       `${res->Fetch.Response.status->Int.toString}: ${res->Fetch.Response.statusText}`,
-    //     )->resolve
-    //   }
-    // )
-    // ->catch(_ => Error("Something went wrong")->resolve)
-     Fetch.fetch("https://hn.algolia.com/api/v1/search?react")->then(Fetch.Response.text)
+    Fetch.fetchWithInit(
+"https://hn.algolia.com/api/v1/search?react",
+      Fetch.RequestInit.make(~method_=Get, ()),
+    )
+    ->then(Fetch.Response.json)
+    ->then(res => {
+     let data = convertJsonToHitsJsonType(res) 
+      let firstData: hitsData = data.hits[0]
+      Js.log2("res", res)
+      Js.log2("data", firstData)
+      firstData->resolve
+    })
+
   }
 
-  React.useEffect0(()=>{
+React.useEffect(() => {
     let data = fetch()
     None
-  }, [])
+}, [])
 
   <form className="search-form">
     <h2>{React.string("Hacker News")}</h2>
