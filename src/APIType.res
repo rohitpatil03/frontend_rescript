@@ -1,3 +1,4 @@
+
 type hitsData = {
   author: string,
   num_comments: int,
@@ -6,12 +7,20 @@ type hitsData = {
   points: int,
 }
 
+@decco.decode
 type hitsJson ={
   hits: list<hitsData>,
 }
 
 let convertJsonToHitsJsonType = (res: Js.Json.t): hitsJson => {
-  let data:hitsJson = {
-    hits: res.hits
+  // Json.Decode.{
+  //   hits: res.hits |> field("hits", hitsJson)
+  // }
+
+  
+  switch(Decco.decode(res.hits, hitsJson)){
+    | OK(data) => data
+    | Error(msg) => Js.Console.log("Decoding failed: " ++ msg); Js.Null
   }
+
 }

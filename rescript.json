@@ -17,11 +17,13 @@
     "@rescript/core",
     "@rescript/react",
     "@glennsl/rescript-fetch",
-    "rescript-webapi"
+    "rescript-webapi",
+    "decco"
   ],
   "bsc-flags": [
     "-open RescriptCore"
   ],
+  "ppx-flags": [ "decco/ppx" ],
   "jsx": {
     "version": 4
   }
