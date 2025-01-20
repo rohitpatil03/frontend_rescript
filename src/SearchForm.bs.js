@@ -4,8 +4,8 @@ import * as Curry from "../node_modules/rescript/lib/es6/curry.js";
 import * as Fetch from "../node_modules/bs-fetch/src/Fetch.bs.js";
 import * as React from "react";
 import * as Js_promise from "../node_modules/rescript/lib/es6/js_promise.js";
-import * as APIType$FeSupportService from "./APIType.bs.js";
-import * as Stories$FeSupportService from "./Stories.bs.js";
+import * as APIType$TestProject from "./APIType.bs.js";
+import * as Stories$TestProject from "./Stories.bs.js";
 
 function SearchForm(Props) {
   var match = React.useState(function () {
@@ -22,7 +22,7 @@ function SearchForm(Props) {
   var $$fetch$1 = function (param) {
     return Js_promise.then_((function (res) {
                   console.log(res);
-                  var data = APIType$FeSupportService.convertJsonToHitsJsonType(res);
+                  var data = APIType$TestProject.convertJsonToHitsJsonType(res);
                   console.log(data);
                   Curry._1(setHits, (function (param) {
                           return data;
@@ -51,7 +51,7 @@ function SearchForm(Props) {
                                   return value;
                                 }));
                         })
-                    })), React.createElement(Stories$FeSupportService.make, {
+                    })), React.createElement(Stories$TestProject.make, {
                   hits: match$1[0].hits
                 }));
 }
