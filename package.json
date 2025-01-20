@@ -6,22 +6,20 @@
   "scripts": {
     "res:build": "rescript",
     "res:clean": "rescript clean",
-    "res:dev": "rescript -w",
+    "res:dev": "rescript build -w",
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview"
   },
   "dependencies": {
     "@glennsl/bs-json": "^5.0.4",
-    "@glennsl/rescript-fetch": "^0.2.3",
-    "@glennsl/rescript-json-combinators": "^1.4.0",
-    "@rescript/core": "^1.6.1",
-    "@rescript/react": "^0.12.1",
+    "@rescript/react": "^0.11.0",
+    "bs-fetch": "^0.6.2",
     "decco": "^1.6.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "rescript": "^11.1.4",
-    "rescript-webapi": "^0.10.0"
+    "rescript": "^10",
+    "rescript-webapi": "^0.9.0"
   },
   "devDependencies": {
     "@vitejs/plugin-react": "^4.2.1",

@@ -1,11 +1,12 @@
-open Promise
-open Webapi
+open Js.Promise
 open APIType
+open Stories
 
 @react.component
 let make = () => {
 
-  let (searchTerm, setSearchTerm) = React.useState(() => "react")
+  let (searchTerm, setSearchTerm) = React.useState(() => "React")
+  let (hits, setHits) = React.useState(()=>{hits:[]})
   /* 
   let fetchAPI = async() =>{
     let response = await Fetch.fetch(`https://hn.algolia.com/api/v1/search?${searchTerm}`, {method:#GET})
@@ -19,30 +20,31 @@ let make = () => {
  */ 
 
   let fetch = () => {
-    Fetch.fetchWithInit(
-"https://hn.algolia.com/api/v1/search?react",
-      Fetch.RequestInit.make(~method_=Get, ()),
+    Fetch.fetch(
+`https://hn.algolia.com/api/v1/search?query=${searchTerm}`
     )
-    ->then(Fetch.Response.json)
-    ->then(res => {
-     let data = convertJsonToHitsJsonType(res) 
-      let firstData: hitsData = data.hits[0]
-      Js.log2("res", res)
-      Js.log2("data", firstData)
-      firstData->resolve
+    |> then_(Fetch.Response.json)
+    |> then_(res => {
+    Js.log(res)
+     let data:hitsJson = convertJsonToHitsJsonType(res)
+    Js.log(data)
+    setHits((_)=>data)
+Js.Promise.resolve()
     })
-
+    
   }
 
-React.useEffect(() => {
+React.useEffect1(() => {
     let data = fetch()
     None
-}, [])
-
+}, [searchTerm])
+<div>
   <form className="search-form">
-    <h2>{React.string("Hacker News")}</h2>
+    <h2 style={ReactDOM.Style.make(~fontSize="40px", ~fontWeight="700", ())}>{React.string("Hacker News")}</h2>
+      <br />
     <input
       type_="text"
+        className="form-input"
       value={searchTerm}
       onChange={(ev: ReactEvent.Form.t) => {
                 let target = ReactEvent.Form.target(ev)
@@ -50,6 +52,8 @@ React.useEffect(() => {
                 setSearchTerm(_prevValue => value)
               }}
     />
-    <button type_="submit">{React.string("Submit")}</button>
   </form>
+    <Stories.make hits={hits.hits} />
+</div>
+
 }
